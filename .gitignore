@@ -25,4 +25,4 @@ yarn-error.log*
 # lock
 yarn.lock
 
-/.idea/
+.idea
