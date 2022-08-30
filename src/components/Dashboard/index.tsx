@@ -25,7 +25,7 @@ const Dashboard = () => {
 
     const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
     const [shipTypeValue, setShipTypeValue] = useState('')
-    const [cardViewType, setCardViewType] = useState<ECardViewType>(ECardViewType.GALLERY)
+    const [cardViewType, setCardViewType] = useState<ECardViewType>(ECardViewType.LIST)
 
     const currentNumberOfShips = data?.ships?.length
     const previousNumberOfShips = previousData?.ships?.length
