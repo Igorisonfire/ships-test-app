@@ -24,11 +24,11 @@ const ViewToggleComponent = (props: IProps) => {
             exclusive
             onChange={onChange}
         >
-            <ToggleButton value={ECardViewType.GALLERY} aria-label="gallery">
-                <ViewModuleIcon />
-            </ToggleButton>
             <ToggleButton value={ECardViewType.LIST} aria-label="list">
                 <ViewListIcon />
+            </ToggleButton>
+            <ToggleButton value={ECardViewType.GALLERY} aria-label="gallery">
+                <ViewModuleIcon />
             </ToggleButton>
         </ToggleButtonGroup>
     )
