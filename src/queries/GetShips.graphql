@@ -1,0 +1,6 @@
+query GetShips($offset: Int, $limit: Int) {
+    ships(offset: $offset, limit: $limit){
+        speed_kn
+        image
+    }
+}

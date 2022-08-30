@@ -3,33 +3,25 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import {createTheme, CssBaseline, ThemeProvider} from '@mui/material'
-import {red} from '@mui/material/colors'
+import ThemeWrapper from './components/ThemeWrapper'
+import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client'
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 )
 
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: '#556cd6',
-        },
-        secondary: {
-            main: '#19857b',
-        },
-        error: {
-            main: red.A400,
-        },
-    },
-})
+const client = new ApolloClient({
+    uri: 'https://qlnm8wqrqj.sse.codesandbox.io/graphql',
+    cache: new InMemoryCache(),
+});
 
 root.render(
     <React.StrictMode>
-        <ThemeProvider theme={theme}>
-            <CssBaseline/>
-            <App/>
-        </ThemeProvider>
+        <ThemeWrapper>
+            <ApolloProvider client={client}>
+                <App/>
+            </ApolloProvider>
+        </ThemeWrapper>
     </React.StrictMode>
 )
 

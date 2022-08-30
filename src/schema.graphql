@@ -1,0 +1,1683 @@
+"""
+Direct the client to resolve this field locally, either from the cache or local resolvers.
+"""
+directive @client(
+  """
+  When true, the client will never use the cache for this value. See
+  https://www.apollographql.com/docs/react/essentials/local-state/#forcing-resolvers-with-clientalways-true
+  """
+  always: Boolean
+) on FIELD | FRAGMENT_DEFINITION | INLINE_FRAGMENT
+
+"""
+Export this locally resolved field as a variable to be used in the remainder of this query. See
+https://www.apollographql.com/docs/react/essentials/local-state/#using-client-fields-as-variables
+"""
+directive @export(
+  """The variable name to export this field as."""
+  as: String!
+) on FIELD
+
+"""
+Specify a custom store key for this result. See
+https://www.apollographql.com/docs/react/advanced/caching/#the-connection-directive
+"""
+directive @connection(
+  """Specify the store key."""
+  key: String!
+
+  """
+  An array of query argument names to include in the generated custom store key.
+  """
+  filter: [String!]
+) on FIELD
+
+""""""
+type Query {
+  """"""
+  _empty: String
+
+  """"""
+  capsules(find: CapsulesFind, id: Boolean, limit: Int, offset: Int, order: String, sort: String): [Capsule]
+
+  """"""
+  capsulesPast(find: CapsulesFind, id: Boolean, limit: Int, offset: Int, order: String, sort: String): [Capsule]
+
+  """"""
+  capsulesUpcoming(find: CapsulesFind, id: Boolean, limit: Int, offset: Int, order: String, sort: String): [Capsule]
+
+  """"""
+  capsule(capsule_serial: String!, id: Boolean): Capsule
+
+  """"""
+  cores(find: CoresFind, id: Boolean, limit: Int, offset: Int, order: String, sort: String): [Core]
+
+  """"""
+  coresPast(find: CoresFind, id: Boolean, limit: Int, offset: Int, order: String, sort: String): [Core]
+
+  """"""
+  coresUpcoming(find: CoresFind, id: Boolean, limit: Int, offset: Int, order: String, sort: String): [Core]
+
+  """"""
+  core(core_serial: String!, id: Boolean): Core
+
+  """"""
+  dragons(id: Boolean, limit: Int, offset: Int): [Dragon]
+
+  """"""
+  dragon(capsule: String!, id: Boolean): Dragon
+
+  """"""
+  histories(find: HistoryFind, id: Boolean, limit: Int, offset: Int, order: String, sort: String): [History]
+
+  """"""
+  history(history_id: Int!, id: Boolean): History
+
+  """"""
+  info(id: Boolean): Info
+
+  """"""
+  api: Api
+
+  """"""
+  landpads(id: Boolean, limit: Int, offset: Int): [Landpad]
+
+  """"""
+  landpad(landpad_id: String!, id: Boolean): Landpad
+
+  """"""
+  launches(find: LaunchFind, id: Boolean, limit: Int, offset: Int, order: String, sort: String): [Launch]
+
+  """"""
+  launchesPast(find: LaunchFind, id: Boolean, limit: Int, offset: Int, order: String, sort: String): [Launch]
+
+  """"""
+  launchesUpcoming(find: LaunchFind, id: Boolean, limit: Int, offset: Int, order: String, sort: String): [Launch]
+
+  """"""
+  launch(flight_number: Int!, id: Boolean): Launch
+
+  """"""
+  launchLatest(id: Boolean, offset: Int): Launch
+
+  """"""
+  launchNext(id: Boolean, offset: Int): Launch
+
+  """"""
+  launchpads(id: Boolean, limit: Int, offset: Int): [Launchpad]
+
+  """"""
+  launchpad(pad: String!, id: Boolean): Launchpad
+
+  """"""
+  missions(find: MissionsFind, id: Boolean, limit: Int, offset: Int): [Mission]
+
+  """"""
+  mission(mission_id: String!, id: Boolean): Mission
+
+  """"""
+  payloads(find: PayloadsFind, id: Boolean, limit: Int, offset: Int, order: String, sort: String): [Payload]
+
+  """"""
+  payload(payload_id: String!): Payload
+
+  """"""
+  roadster(id: Boolean): Roadster
+
+  """"""
+  rockets(id: Boolean, limit: Int, offset: Int): [Rocket]
+
+  """"""
+  rocket(rocket: String!, id: Boolean): Rocket
+
+  """"""
+  ships(find: ShipsFind, id: Boolean, limit: Int, offset: Int, order: String, sort: String): [Ship]
+
+  """"""
+  ship(ship_id: String!, id: Boolean): Ship
+}
+
+""""""
+input CapsulesFind {
+  """"""
+  capsule_serial: String
+
+  """"""
+  capsule_id: String
+
+  """"""
+  status: String
+
+  """"""
+  original_launch: Date
+
+  """"""
+  mission: String
+
+  """"""
+  landings: Int
+
+  """"""
+  type: String
+
+  """"""
+  reuse_count: Int
+}
+
+""""""
+scalar Date
+
+""""""
+type Capsule {
+  """"""
+  _id: ObjectID
+
+  """"""
+  capsule_serial: String
+
+  """"""
+  status: String
+
+  """"""
+  original_launch: Date
+
+  """"""
+  missions: [CapsuleMission]
+
+  """"""
+  landings: Int
+
+  """"""
+  type: String
+
+  """"""
+  reuse_count: Int
+
+  """"""
+  capsule: Dragon
+}
+
+""""""
+scalar ObjectID
+
+""""""
+type CapsuleMission {
+  """"""
+  name: String
+
+  """"""
+  flight: Int
+}
+
+""""""
+type Dragon {
+  """"""
+  _id: ObjectID
+
+  """"""
+  id: String
+
+  """"""
+  name: String
+
+  """"""
+  type: String
+
+  """"""
+  active: Boolean
+
+  """"""
+  crew_capacity: Int
+
+  """"""
+  sidewall_angle_deg: Float
+
+  """"""
+  orbit_duration_yr: Int
+
+  """"""
+  dry_mass_kg: Int
+
+  """"""
+  dry_mass_lb: Int
+
+  """"""
+  first_flight: String
+
+  """"""
+  heat_shield: DragonHeatShield
+
+  """"""
+  thrusters: [DragonThrust]
+
+  """"""
+  launch_payload_mass: Mass
+
+  """"""
+  launch_payload_vol: Volume
+
+  """"""
+  return_payload_mass: Mass
+
+  """"""
+  return_payload_vol: Volume
+
+  """"""
+  pressurized_capsule: DragonPressurizedCapsule
+
+  """"""
+  trunk: DragonTrunk
+
+  """"""
+  height_w_trunk: Distance
+
+  """"""
+  diameter: Distance
+
+  """"""
+  wikipedia: String
+
+  """"""
+  description: String
+}
+
+""""""
+type DragonHeatShield {
+  """"""
+  material: String
+
+  """"""
+  size_meters: Float
+
+  """"""
+  temp_degrees: Int
+
+  """"""
+  dev_partner: String
+}
+
+""""""
+type DragonThrust {
+  """"""
+  type: String
+
+  """"""
+  amount: Int
+
+  """"""
+  pods: Int
+
+  """"""
+  fuel_1: String
+
+  """"""
+  fuel_2: String
+
+  """"""
+  thrust: Force
+}
+
+""""""
+type Force {
+  """"""
+  kN: Float
+
+  """"""
+  lbf: Float
+}
+
+""""""
+type Mass {
+  """"""
+  kg: Int
+
+  """"""
+  lb: Int
+}
+
+""""""
+type Volume {
+  """"""
+  cubic_meters: Int
+
+  """"""
+  cubic_feet: Int
+}
+
+""""""
+type DragonPressurizedCapsule {
+  """"""
+  payload_volume: Volume
+}
+
+""""""
+type DragonTrunk {
+  """"""
+  trunk_volume: Volume
+
+  """"""
+  cargo: DragonTrunkCargo
+}
+
+""""""
+type DragonTrunkCargo {
+  """"""
+  solar_array: Int
+
+  """"""
+  unpressurized_cargo: Boolean
+}
+
+""""""
+type Distance {
+  """"""
+  meters: Float
+
+  """"""
+  feet: Float
+}
+
+""""""
+input CoresFind {
+  """"""
+  core_serial: String
+
+  """"""
+  block: Int
+
+  """"""
+  status: String
+
+  """"""
+  original_launch: Date
+
+  """"""
+  missions: String
+
+  """"""
+  reuse_count: Int
+
+  """"""
+  rtls_attempts: Int
+
+  """"""
+  rtls_landings: Int
+
+  """"""
+  asds_attempts: Int
+
+  """"""
+  asds_landings: Int
+
+  """"""
+  water_landing: Boolean
+}
+
+""""""
+type Core {
+  """"""
+  _id: ObjectID
+
+  """"""
+  core_serial: String
+
+  """"""
+  block: Int
+
+  """"""
+  status: String
+
+  """"""
+  original_launch: Date
+
+  """"""
+  missions: [CapsuleMission]
+
+  """"""
+  reuse_count: Int
+
+  """"""
+  rtls_attempts: Int
+
+  """"""
+  rtls_landings: Int
+
+  """"""
+  asds_attempts: Int
+
+  """"""
+  asds_landings: Int
+
+  """"""
+  water_landing: Boolean
+}
+
+""""""
+input HistoryFind {
+  """"""
+  id: Int
+
+  """"""
+  start: Date
+
+  """"""
+  end: Date
+
+  """"""
+  flight_number: Int
+}
+
+""""""
+type History {
+  """"""
+  _id: ObjectID
+
+  """"""
+  id: Int
+
+  """"""
+  title: String
+
+  """"""
+  event_date_utc: Date
+
+  """"""
+  event_date_unix: Date
+
+  """"""
+  details: String
+
+  """"""
+  links: [Link]
+
+  """"""
+  flight: Launch
+}
+
+""""""
+type Link {
+  """"""
+  reddit: String
+
+  """"""
+  article: String
+
+  """"""
+  wikipedia: String
+}
+
+""""""
+type Launch {
+  """"""
+  _id: ObjectID
+
+  """"""
+  flight_number: Int
+
+  """"""
+  mission_name: String
+
+  """"""
+  mission_id: [String]
+
+  """"""
+  upcoming: Boolean
+
+  """"""
+  launch_year: String
+
+  """"""
+  launch_date_unix: Date
+
+  """"""
+  launch_date_utc: Date
+
+  """"""
+  launch_date_local: Date
+
+  """"""
+  is_tentative: Boolean
+
+  """"""
+  tentative_max_precision: String
+
+  """"""
+  rocket: LaunchRocket
+
+  """"""
+  ships: [String]
+
+  """"""
+  telemetry: LaunchTelemetry
+
+  """"""
+  launch_site: LaunchSite
+
+  """"""
+  launch_success: Boolean
+
+  """"""
+  links: LaunchLinks
+
+  """"""
+  details: String
+
+  """"""
+  static_fire_date_utc: Date
+
+  """"""
+  static_fire_date_unix: Date
+}
+
+""""""
+type LaunchRocket {
+  """"""
+  rocket: Rocket
+
+  """"""
+  rocket_name: String
+
+  """"""
+  rocket_type: String
+
+  """"""
+  first_stage: LaunchRocketFirstStage
+
+  """"""
+  second_stage: LaunchRocketSecondStage
+
+  """"""
+  fairings: LaunchRocketFairings
+}
+
+""""""
+type Rocket {
+  """"""
+  _id: ObjectID
+
+  """"""
+  id: Int
+
+  """"""
+  active: Boolean
+
+  """"""
+  stages: Int
+
+  """"""
+  boosters: Int
+
+  """"""
+  cost_per_launch: Int
+
+  """"""
+  success_rate_pct: Int
+
+  """"""
+  first_flight: Date
+
+  """"""
+  country: String
+
+  """"""
+  company: String
+
+  """"""
+  height: Distance
+
+  """"""
+  diameter: Distance
+
+  """"""
+  mass: Mass
+
+  """"""
+  payload_weights: RocketPayloadWeight
+
+  """"""
+  first_stage: RocketFirstStage
+
+  """"""
+  second_stage: RocketSecondStage
+
+  """"""
+  engines: RocketEngines
+
+  """"""
+  landing_legs: RocketLandingLegs
+
+  """"""
+  wikipedia: String
+
+  """"""
+  description: String
+
+  """"""
+  rocket_id: String
+
+  """"""
+  rocket_name: String
+
+  """"""
+  rocket_type: String
+}
+
+""""""
+type RocketPayloadWeight {
+  """"""
+  id: String
+
+  """"""
+  name: String
+
+  """"""
+  kg: Int
+
+  """"""
+  lb: Int
+}
+
+""""""
+type RocketFirstStage {
+  """"""
+  reusable: Boolean
+
+  """"""
+  engines: Int
+
+  """"""
+  fuel_amount_tons: Float
+
+  """"""
+  burn_time_sec: Int
+
+  """"""
+  thrust_sea_level: Force
+
+  """"""
+  thrust_vacuum: Force
+}
+
+""""""
+type RocketSecondStage {
+  """"""
+  engines: Int
+
+  """"""
+  fuel_amount_tons: Float
+
+  """"""
+  burn_time_sec: Int
+
+  """"""
+  thrust: Force
+
+  """"""
+  payloads: RocketSecondStagePayloads
+}
+
+""""""
+type RocketSecondStagePayloads {
+  """"""
+  option_1: String
+
+  """"""
+  composite_fairing: RocketSecondStagePayloadCompositeFairing
+}
+
+""""""
+type RocketSecondStagePayloadCompositeFairing {
+  """"""
+  height: Distance
+
+  """"""
+  diameter: Distance
+}
+
+""""""
+type RocketEngines {
+  """"""
+  number: Int
+
+  """"""
+  type: String
+
+  """"""
+  version: String
+
+  """"""
+  layout: String
+
+  """"""
+  engine_loss_max: String
+
+  """"""
+  propellant_1: String
+
+  """"""
+  propellant_2: String
+
+  """"""
+  thrust_sea_level: Force
+
+  """"""
+  thrust_vacuum: Force
+
+  """"""
+  thrust_to_weight: Int
+}
+
+""""""
+type RocketLandingLegs {
+  """"""
+  number: Int
+
+  """"""
+  material: String
+}
+
+""""""
+type LaunchRocketFirstStage {
+  """"""
+  cores: [LaunchRocketFirstStageCore]
+}
+
+""""""
+type LaunchRocketFirstStageCore {
+  """"""
+  core: Core
+
+  """"""
+  flight: Int
+
+  """"""
+  block: Int
+
+  """"""
+  gridfins: Boolean
+
+  """"""
+  legs: Boolean
+
+  """"""
+  reused: Boolean
+
+  """"""
+  land_success: Boolean
+
+  """"""
+  landing_intent: Boolean
+
+  """"""
+  landing_type: String
+
+  """"""
+  landing_vehicle: Boolean
+}
+
+""""""
+type LaunchRocketSecondStage {
+  """"""
+  block: Int
+
+  """"""
+  payloads: [Payload]
+}
+
+""""""
+type Payload {
+  """"""
+  _id: ObjectID
+
+  """"""
+  payload_id: String
+
+  """"""
+  norad_id: [Int]
+
+  """"""
+  reused: Boolean
+
+  """"""
+  customers: [String]
+
+  """"""
+  nationality: String
+
+  """"""
+  manufacturer: String
+
+  """"""
+  payload_type: String
+
+  """"""
+  payload_mass_kg: Int
+
+  """"""
+  payload_mass_lbs: Int
+
+  """"""
+  orbit: String
+
+  """"""
+  orbit_params: PayloadOrbitParams
+}
+
+""""""
+type PayloadOrbitParams {
+  """"""
+  reference_system: String
+
+  """"""
+  regime: String
+
+  """"""
+  longitude: Int
+
+  """"""
+  lifespan_years: Int
+
+  """"""
+  epoch: Date
+
+  """"""
+  mean_motion: Float
+
+  """"""
+  raan: Float
+
+  """"""
+  semi_major_axis_km: Float
+
+  """"""
+  eccentricity: Float
+
+  """"""
+  periapsis_km: Float
+
+  """"""
+  apoapsis_km: Float
+
+  """"""
+  inclination_deg: Float
+
+  """"""
+  period_min: Float
+
+  """"""
+  arg_of_pericenter: Float
+
+  """"""
+  mean_anomaly: Float
+}
+
+""""""
+type LaunchRocketFairings {
+  """"""
+  reused: Boolean
+
+  """"""
+  recovery_attempt: Boolean
+
+  """"""
+  recovered: Boolean
+
+  """"""
+  ship: String
+}
+
+""""""
+type LaunchTelemetry {
+  """"""
+  flight_club: String
+}
+
+""""""
+type LaunchSite {
+  """"""
+  site_id: String
+
+  """"""
+  site_name: String
+
+  """"""
+  site_name_long: String
+}
+
+""""""
+type LaunchLinks {
+  """"""
+  mission_patch: String
+
+  """"""
+  mission_patch_small: String
+
+  """"""
+  reddit_campaign: String
+
+  """"""
+  reddit_launch: String
+
+  """"""
+  reddit_recovery: String
+
+  """"""
+  reddit_media: String
+
+  """"""
+  presskit: String
+
+  """"""
+  article_link: String
+
+  """"""
+  wikipedia: String
+
+  """"""
+  video_link: String
+
+  """"""
+  flickr_images: [String]
+}
+
+""""""
+type Info {
+  """"""
+  _id: ObjectID
+
+  """"""
+  name: String
+
+  """"""
+  founder: String
+
+  """"""
+  founded: Int
+
+  """"""
+  employees: Int
+
+  """"""
+  vehicles: Int
+
+  """"""
+  launch_sites: Int
+
+  """"""
+  test_sites: Int
+
+  """"""
+  ceo: String
+
+  """"""
+  cto: String
+
+  """"""
+  coo: String
+
+  """"""
+  cto_propulsion: String
+
+  """"""
+  valuation: Int
+
+  """"""
+  headquarters: Address
+
+  """"""
+  summary: String
+}
+
+""""""
+type Address {
+  """"""
+  address: String
+
+  """"""
+  city: String
+
+  """"""
+  state: String
+}
+
+""""""
+type Api {
+  """"""
+  project_name: String
+
+  """"""
+  version: String
+
+  """"""
+  project_link: String
+
+  """"""
+  organization: String
+
+  """"""
+  organization_link: String
+
+  """"""
+  description: String
+}
+
+""""""
+type Landpad {
+  """"""
+  _id: ObjectID
+
+  """"""
+  id: String
+
+  """"""
+  full_name: String
+
+  """"""
+  status: String
+
+  """"""
+  location: Location
+
+  """"""
+  landing_type: String
+
+  """"""
+  attempted_landings: String
+
+  """"""
+  successful_landings: String
+
+  """"""
+  wikipedia: String
+
+  """"""
+  details: String
+}
+
+""""""
+type Location {
+  """"""
+  name: String
+
+  """"""
+  region: String
+
+  """"""
+  latitude: Float
+
+  """"""
+  longitude: Float
+}
+
+""""""
+input LaunchFind {
+  """"""
+  flight_id: String
+
+  """"""
+  start: Date
+
+  """"""
+  end: Date
+
+  """"""
+  flight_number: Int
+
+  """"""
+  mission_name: String
+
+  """"""
+  mission_id: String
+
+  """"""
+  launch_year: String
+
+  """"""
+  launch_date_utc: Date
+
+  """"""
+  launch_date_local: Date
+
+  """"""
+  tentative: String
+
+  """"""
+  tentative_max_precision: String
+
+  """"""
+  tbd: String
+
+  """"""
+  rocket_id: String
+
+  """"""
+  rocket_name: String
+
+  """"""
+  rocket_type: String
+
+  """"""
+  core_serial: String
+
+  """"""
+  cap_serial: String
+
+  """"""
+  core_flight: Int
+
+  """"""
+  block: Int
+
+  """"""
+  gridfins: String
+
+  """"""
+  legs: String
+
+  """"""
+  second_stage_block: String
+
+  """"""
+  fairings_reused: String
+
+  """"""
+  fairings_recovery_attempt: String
+
+  """"""
+  fairings_recovered: String
+
+  """"""
+  fairings_ship: String
+
+  """"""
+  core_reuse: String
+
+  """"""
+  side_core1_reuse: String
+
+  """"""
+  side_core2_reuse: String
+
+  """"""
+  fairings_reuse: String
+
+  """"""
+  capsule_reuse: String
+
+  """"""
+  ship: String
+
+  """"""
+  site_id: String
+
+  """"""
+  site_name: String
+
+  """"""
+  site_name_long: String
+
+  """"""
+  payload_id: String
+
+  """"""
+  norad_id: Int
+
+  """"""
+  customer: String
+
+  """"""
+  nationality: String
+
+  """"""
+  manufacturer: String
+
+  """"""
+  payload_type: String
+
+  """"""
+  orbit: String
+
+  """"""
+  reference_system: String
+
+  """"""
+  regime: String
+
+  """"""
+  longitude: Float
+
+  """"""
+  semi_major_axis_km: Float
+
+  """"""
+  eccentricity: Float
+
+  """"""
+  periapsis_km: Float
+
+  """"""
+  apoapsis_km: Float
+
+  """"""
+  inclination_deg: Float
+
+  """"""
+  period_min: Float
+
+  """"""
+  lifespan_years: Int
+
+  """"""
+  epoch: Date
+
+  """"""
+  mean_motion: Float
+
+  """"""
+  raan: Float
+
+  """"""
+  reused: String
+
+  """"""
+  launch_success: String
+
+  """"""
+  land_success: String
+
+  """"""
+  landing_intent: String
+
+  """"""
+  landing_type: String
+
+  """"""
+  landing_vehicle: String
+}
+
+""""""
+type Launchpad {
+  """"""
+  _id: ObjectID
+
+  """"""
+  id: Int
+
+  """"""
+  status: String
+
+  """"""
+  location: Location
+
+  """"""
+  vehicles_launched: [Rocket]
+
+  """"""
+  attempted_launches: Int
+
+  """"""
+  successful_launches: Int
+
+  """"""
+  wikipedia: String
+
+  """"""
+  details: String
+
+  """"""
+  site_id: String
+
+  """"""
+  site_name_long: String
+}
+
+""""""
+input MissionsFind {
+  """"""
+  mission_name: String
+
+  """"""
+  mission_id: String
+
+  """"""
+  manufacturer: String
+
+  """"""
+  payload_id: String
+}
+
+""""""
+type Mission {
+  """"""
+  _id: ObjectID
+
+  """"""
+  mission_name: String
+
+  """"""
+  mission_id: String
+
+  """"""
+  manufacturers: [String]
+
+  """"""
+  wikipedia: String
+
+  """"""
+  website: String
+
+  """"""
+  twitter: String
+
+  """"""
+  description: String
+
+  """"""
+  payloads: [Payload]
+}
+
+""""""
+input PayloadsFind {
+  """"""
+  payload_id: String
+
+  """"""
+  norad_id: Int
+
+  """"""
+  customer: String
+
+  """"""
+  nationality: String
+
+  """"""
+  manufacturer: String
+
+  """"""
+  payload_type: String
+
+  """"""
+  orbit: String
+
+  """"""
+  reference_system: String
+
+  """"""
+  regime: String
+
+  """"""
+  longitude: Float
+
+  """"""
+  semi_major_axis_km: Float
+
+  """"""
+  eccentricity: Float
+
+  """"""
+  periapsis_km: Float
+
+  """"""
+  apoapsis_km: Float
+
+  """"""
+  inclination_deg: Float
+
+  """"""
+  period_min: Float
+
+  """"""
+  lifespan_years: Int
+
+  """"""
+  epoch: Date
+
+  """"""
+  mean_motion: Float
+
+  """"""
+  raan: Float
+
+  """"""
+  reused: Boolean
+}
+
+""""""
+type Roadster {
+  """"""
+  _id: ObjectID
+
+  """"""
+  name: String
+
+  """"""
+  launch_date_utc: Date
+
+  """"""
+  launch_date_unix: Date
+
+  """"""
+  launch_mass_kg: Int
+
+  """"""
+  launch_mass_lbs: Int
+
+  """"""
+  norad_id: Int
+
+  """"""
+  epoch_jd: Float
+
+  """"""
+  orbit_type: Float
+
+  """"""
+  apoapsis_au: Float
+
+  """"""
+  periapsis_au: Float
+
+  """"""
+  semi_major_axis_au: Float
+
+  """"""
+  eccentricity: Float
+
+  """"""
+  inclination: Float
+
+  """"""
+  longitude: Float
+
+  """"""
+  periapsis_arg: Float
+
+  """"""
+  period_days: Float
+
+  """"""
+  speed_kph: Float
+
+  """"""
+  speed_mph: Float
+
+  """"""
+  earth_distance_km: Float
+
+  """"""
+  earth_distance_mi: Float
+
+  """"""
+  mars_distance_km: Float
+
+  """"""
+  mars_distance_mi: Float
+
+  """"""
+  wikipedia: String
+
+  """"""
+  details: String
+}
+
+""""""
+input ShipsFind {
+  """"""
+  ship_id: String
+
+  """"""
+  ship_name: String
+
+  """"""
+  ship_model: String
+
+  """"""
+  ship_type: String
+
+  """"""
+  role: String
+
+  """"""
+  active: Boolean
+
+  """"""
+  imo: Int
+
+  """"""
+  mmsi: Int
+
+  """"""
+  abs: Int
+
+  """"""
+  class: Int
+
+  """"""
+  weight_lbs: Int
+
+  """"""
+  weight_kg: Int
+
+  """"""
+  year_built: Int
+
+  """"""
+  home_port: String
+
+  """"""
+  status: String
+
+  """"""
+  speed_kn: Int
+
+  """"""
+  course_deg: Int
+
+  """"""
+  latitude: Float
+
+  """"""
+  longitude: Float
+
+  """"""
+  successful_landings: Int
+
+  """"""
+  attempted_landings: Int
+
+  """"""
+  mission: String
+}
+
+""""""
+type Ship {
+  """"""
+  _id: ObjectID
+
+  """"""
+  ship_id: String
+
+  """"""
+  ship_name: String
+
+  """"""
+  ship_model: String
+
+  """"""
+  ship_type: String
+
+  """"""
+  roles: [String]
+
+  """"""
+  active: Boolean
+
+  """"""
+  imo: Int
+
+  """"""
+  mmsi: Int
+
+  """"""
+  abs: Int
+
+  """"""
+  class: Int
+
+  """"""
+  weight_lbs: Int
+
+  """"""
+  weight_kg: Int
+
+  """"""
+  year_built: Int
+
+  """"""
+  home_port: String
+
+  """"""
+  status: String
+
+  """"""
+  speed_kn: Int
+
+  """"""
+  course_deg: Int
+
+  """"""
+  position: Location
+
+  """"""
+  successful_landings: Int
+
+  """"""
+  attempted_landings: Int
+
+  """"""
+  missions: [ShipMission]
+
+  """"""
+  url: String
+
+  """"""
+  image: String
+}
+
+""""""
+type ShipMission {
+  """"""
+  name: String
+
+  """"""
+  flight: String
+}
+
+""""""
+type CoreMission {
+  """"""
+  name: String
+
+  """"""
+  flight: Int
+}
