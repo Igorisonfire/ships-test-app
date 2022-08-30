@@ -2,6 +2,7 @@ import React, {forwardRef, Ref} from 'react';
 import {Ship} from '../../types'
 import {Card, CardContent, CardMedia, Grid, Typography} from '@mui/material'
 import {ECardViewType} from '../../constants/card-view-types'
+import notFoundImage from '../../images/image-not-found-icon.png'
 
 interface IProps extends Ship {
     cardViewType: ECardViewType
@@ -31,7 +32,7 @@ const CardItem = forwardRef((props: IProps, ref: Ref<HTMLDivElement>) => {
                     sx={{width: isGalleryType ? '100%' : '40%'}}
                     component="img"
                     height="140"
-                    image={image || ''}
+                    image={image || notFoundImage}
                     alt={ship_name || ''}
                 />
                 <CardContent>
