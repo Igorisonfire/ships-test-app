@@ -1,6 +1,7 @@
-query GetShips($offset: Int, $limit: Int) {
-    ships(offset: $offset, limit: $limit){
-        speed_kn
+query GetShips($offset: Int, $limit: Int, $find: ShipsFind) {
+    ships(offset: $offset, limit: $limit, find: $find){
+        ship_name
         image
+        ship_type
     }
 }

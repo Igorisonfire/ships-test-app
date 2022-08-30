@@ -5,7 +5,7 @@ import Dashboard from './components/Dashboard'
 
 function App() {
     return (
-        <Container>
+        <Container sx={{pt: 4, pb: 4}}>
           <Dashboard/>
         </Container>
     )
