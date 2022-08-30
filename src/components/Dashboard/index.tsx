@@ -29,8 +29,8 @@ const Dashboard = () => {
 
     const currentNumberOfShips = data?.ships?.length
     const previousNumberOfShips = previousData?.ships?.length
-    const allItemsFetched = currentNumberOfShips === previousNumberOfShips
 
+    //Infinity scroll
     const observer = useRef<IntersectionObserver | null>(null)
     const lastItemRef = useCallback(
         (node: HTMLDivElement | null) => {
@@ -41,7 +41,7 @@ const Dashboard = () => {
             }
 
             observer.current = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting && !allItemsFetched) {
+                if (entries[0].isIntersecting && currentNumberOfShips !== previousNumberOfShips) {
                     fetchMore({
                         variables: {
                             offset: currentNumberOfShips
@@ -51,9 +51,10 @@ const Dashboard = () => {
             });
             if (node) observer.current?.observe(node);
         },
-        [loading, fetchMore, currentNumberOfShips, allItemsFetched]
+        [loading, fetchMore, currentNumberOfShips, previousNumberOfShips]
     );
 
+    //Filter by type
     useEffect(() => {
         if (shipTypeValue) {
             refetch({
