@@ -909,8 +909,8 @@ export type Ship = {
   roles?: Maybe<Array<Maybe<Scalars['String']>>>;
   ship_id?: Maybe<Scalars['String']>;
   ship_model?: Maybe<Scalars['String']>;
-  ship_name?: Maybe<Scalars['String']>;
-  ship_type?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
   speed_kn?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['String']>;
   successful_landings?: Maybe<Scalars['Int']>;
@@ -941,8 +941,8 @@ export type ShipsFind = {
   role?: InputMaybe<Scalars['String']>;
   ship_id?: InputMaybe<Scalars['String']>;
   ship_model?: InputMaybe<Scalars['String']>;
-  ship_name?: InputMaybe<Scalars['String']>;
-  ship_type?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Scalars['String']>;
   speed_kn?: InputMaybe<Scalars['Int']>;
   status?: InputMaybe<Scalars['String']>;
   successful_landings?: InputMaybe<Scalars['Int']>;

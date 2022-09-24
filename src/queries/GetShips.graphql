@@ -1,7 +1,7 @@
 query GetShips($offset: Int, $limit: Int, $find: ShipsFind) {
     ships(offset: $offset, limit: $limit, find: $find){
-        ship_name
+        name
         image
-        ship_type
+        type
     }
 }

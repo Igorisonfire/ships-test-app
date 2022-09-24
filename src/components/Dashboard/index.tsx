@@ -59,7 +59,7 @@ const Dashboard = () => {
         if (shipTypeValue) {
             refetch({
                 find: {
-                    ship_type: shipTypeValue === 'All' ? '' : shipTypeValue
+                    type: shipTypeValue === 'All' ? '' : shipTypeValue
                 }
             })
         }

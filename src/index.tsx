@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(
 )
 
 const client = new ApolloClient({
-    uri: 'https://qlnm8wqrqj.sse.codesandbox.io/graphql',
+    uri: 'https://api.spacex.land/graphql',
     cache: new InMemoryCache({
         typePolicies: {
             Query: {

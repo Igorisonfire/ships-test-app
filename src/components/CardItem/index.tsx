@@ -10,7 +10,7 @@ interface IProps extends Ship {
 }
 
 const CardItem = forwardRef((props: IProps, ref: Ref<HTMLDivElement>) => {
-    const {cardViewType, image, ship_name, ship_type, isMobile} = props
+    const {cardViewType, image, name, type, isMobile} = props
     const isGalleryType = isMobile || cardViewType === ECardViewType.GALLERY
 
     const mdState = isGalleryType ? 4 : 12
@@ -33,24 +33,24 @@ const CardItem = forwardRef((props: IProps, ref: Ref<HTMLDivElement>) => {
                     component="img"
                     height="140"
                     image={image || notFoundImage}
-                    alt={ship_name || ''}
+                    alt={name || ''}
                 />
                 <CardContent>
                     <Typography
                         gutterBottom
                         variant="h5"
                         sx={sxTextEllipsis}
-                        title={ship_name || ''}
+                        title={name || ''}
                     >
-                        {ship_name}
+                        {name}
                     </Typography>
                     <Typography
                         variant="body2"
                         color="text.secondary"
                         sx={sxTextEllipsis}
-                        title={ship_type || ''}
+                        title={type || ''}
                     >
-                        {ship_type}
+                        {type}
                     </Typography>
                 </CardContent>
             </Card>

@@ -1526,13 +1526,13 @@ input ShipsFind {
   ship_id: String
 
   """"""
-  ship_name: String
+  name: String
 
   """"""
   ship_model: String
 
   """"""
-  ship_type: String
+  type: String
 
   """"""
   role: String
@@ -1598,13 +1598,13 @@ type Ship {
   ship_id: String
 
   """"""
-  ship_name: String
+  name: String
 
   """"""
   ship_model: String
 
   """"""
-  ship_type: String
+  type: String
 
   """"""
   roles: [String]
